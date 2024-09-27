@@ -26,9 +26,9 @@ const MembershipCardPayment = ({ subEvent }) => {
     }
   }, []);
 
-  // Update fees when tickets are updated
+  // Update fees=1599 when tickets are updated
   useEffect(() => {
-    setFees(1599* formData.tickets);
+    setFees(1* formData.tickets);
   }, [formData.tickets]);
 
   // Handle form input changes
