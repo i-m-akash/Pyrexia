@@ -62,7 +62,7 @@ const Cart = () => {
                                 <p>Team Size: {item.teamSize}</p>
                                 <p>Fees: ₹{item.fees}</p>
                                 <button
-                                    onClick={() => checkoutHandler(item.fees, userEmail, item.eventName,`${BASE_URL}/api/eventpaymentverification`,navigate)}
+                                    onClick={() => checkoutHandler(1, userEmail, item.eventName,`${BASE_URL}/api/eventpaymentverification`,navigate)}
                                     className="mt-2 bg-[#001f3f] hover:bg-gradient-to-t from-blue-800 via-blue-500 to-blue-400 text-white p-2 "
                                 >
                                     Pay Now
