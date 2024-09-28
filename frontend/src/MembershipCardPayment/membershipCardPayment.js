@@ -1,4 +1,3 @@
-// src/components/RegisterPage.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -40,22 +39,22 @@ const MembershipCardPayment = ({ subEvent }) => {
   };
 
   // Handle form submission
-  
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-      
-        try {
-          // Proceed to payment after user confirmation
-      
-          await checkoutHandler(fees, userInfo, formData,`${BASE_URL}/api/membershipCardPaymentVerification`,navigate);
-        
-        } catch (error) {
-          console.error("Error during payment process:", error);
-        }
-      };
-      
-  
-
+      const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      try {
+        const promises = [
+          checkoutHandler(fees, userInfo, formData,`${BASE_URL}/api/membershipCardPaymentVerification`,navigate)
+        ];
+    
+        // If there are other async tasks, add them here and run concurrently.
+        await Promise.all(promises);
+    
+      } catch (error) {
+        console.error("Error during payment process:", error);
+      }
+    };
+     
   return (
     <div className="mt-24 bg-white p-8 rounded shadow-md my-24 max-w-5xl  mx-auto ">
       <h2 className="font-bold animate-pulse text-2xl md:text-3xl mx-auto my-5">Purchase MembershipCard</h2>
