@@ -14,6 +14,7 @@ const BasicRegistrationPayment = ({ subEvent }) => {
     tickets: 1,
   });
   const [fees, setFees] = useState(0);
+   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Fetch user info from localStorage
@@ -39,21 +40,22 @@ const BasicRegistrationPayment = ({ subEvent }) => {
   };
 
   // Handle form submission
+ 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const promises = [
-      checkoutHandler(fees, userInfo, formData, `${BASE_URL}/api/basicpaymentverification`, navigate)
-    ];
+    try {
+      // Proceed to payment after user confirmation
 
-    // If there are other async tasks, add them here and run concurrently.
-    await Promise.all(promises);
+      await checkoutHandler(fees, userInfo, formData, `${BASE_URL}/api/basicpaymentverification`, navigate);
 
-  } catch (error) {
-    console.error("Error during payment process:", error);
-  }
-};   
+    } catch (error) {
+      console.error("Error during payment process:", error);
+    } finally {
+      setLoading(false); // Stop loading after process is done (whether success or failure)
+    }
+  }; 
   
   return (
     <div className="mt-24 bg-white p-8 rounded shadow-md my-24 max-w-5xl  mx-auto ">
@@ -121,9 +123,10 @@ const BasicRegistrationPayment = ({ subEvent }) => {
           <button
             type="submit"
             className="w-full bg-[#001f3f] hover:bg-gradient-to-t from-blue-800 via-blue-500 to-blue-400 text-white p-2 rounded "
-            
+         disabled={loading} // Disable button when loading
           >
-            Confirm Registration
+            {loading ? "Processing..." : "Confirm Registration"}
+         
           </button>
         </div>
       </form>
